@@ -1,13 +1,41 @@
-# TweetyTrips
-##Description
-This is a project for CSCE470 (at Texas A&M University) in Spring 2016 which performs sentiment analysis on recent tweets in a specific geographic location. We hope to provide adventurous (but poor) college students a method to choose which city to visit, given current Frontier Airlines deals. These flash deals typically require tickets to be bought that day for flights that are within a certain upcoming date range.
+# alchemyapi_python #
 
-We will:
-- [ ] Determine the typical difference in time between the sale date and the flight for Frontier promotional emails (optional)
-- [ ] Collect cities that Frontier Airlines provides promotional deals using a web crawler 
-- [ ] Collect a backlog of tweets to create a overall happiness level for the above cities
-- [ ] Analyze the sentiments of these tweets
-- [ ] Compare the happiness levels of these cities
+A sdk for AlchemyAPI using Python
 
-##Resources/Libraries Used
-scra.py
+
+## AlchemyAPI ##
+
+AlchemyAPI offers artificial intelligence as a service. We teach computers to learn how to read and see, and apply our technology to text analysis and image recognition through a cloud-based API. Our customers use AlchemyAPI to transform their unstructured content such as blog posts, news articles, social media posts and images into much more useful structured data. 
+
+AlchemyAPI is a tech startup located in downtown Denver, Colorado. As the world’s most popular text analysis service, AlchemyAPI serves over 3.5 billion monthly API requests to over 35,000 developers. To enable our services, we use artificial intelligence, machine learning, neural networks, natural language processing and massive-scale web crawling. Our technology powers use cases in a variety of industry verticals, including social media monitoring, business intelligence, content recommendations, financial trading and targeted advertising.
+
+More information at: http://www.alchemyapi.com
+
+
+
+## API Key ##
+
+To use AlchemyAPI, you'll need to obtain an API key and attach that key to all requests. If you do not already have a key, please visit: http://www.alchemyapi.com/api/register.html
+
+
+
+## Requirements ##
+
+The Python SDK requires that you install the [Requests Python module](http://docs.python-requests.org/en/latest/user/install/#install).
+
+
+
+## Getting Started with the Python SDK ##
+
+To get started and run the example, simply:
+
+	git clone https://github.com/AlchemyAPI/alchemyapi_python.git
+	cd alchemyapi_python
+	python alchemyapi.py YOUR_API_KEY
+	python example.py
+
+
+Just replace YOUR_API_KEY with your 40 character API key from AlchemyAPI, and you should be good to go.
+
+	
+	
