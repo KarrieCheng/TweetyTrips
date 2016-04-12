@@ -7,7 +7,7 @@ from pprint import pprint
 import sys
 import string
 import os
-from __future__ import print_function
+
 
 
 def get_data():
@@ -45,7 +45,6 @@ def create_data():
     data = get_data()
     for d in data:
         tweet_count = 10
-        print "looped"
         iterator = twitter_stream.statuses.filter(track= d['City'], language="en")
         if not os.path.exists("data_city"):
             os.makedirs("data_city")
@@ -55,7 +54,6 @@ def create_data():
             # Twitter Python Tool wraps the data returned by Twitter 
             # as a TwitterDictResponse object.
             # We convert it back to the JSON format to print/score
-            
             try:
                 print json.dumps(tweet["text"]).encode('utf-8')
                 file.write(json.dumps(tweet["text"]).encode('utf-8'))
@@ -66,7 +64,7 @@ def create_data():
             # print json.dumps(tweet, indent=4)
             
             if tweet_count <= 0:
-                print "broke"
+               
                 break 
 
 
