@@ -12,3 +12,15 @@ We will:
  - scra.py
  - alchemy API
  - openflights API
+
+
+##How to Run:
+- dependencies:
+ - pip install 'twitter'
+ - pip install 'tweepy'
+- to collect the data:
+ - You will also need to get your own api key to run this application and insert it in the twit2.py file
+ - first run python twit2.py making sure that the airport.json file is in the same directory.
+ - this step should take a little bit of time as it will create the directory data_city then fill in files with incoming   tweets
+- to run the sentiment on the cities:
+  - run the line  python alchemyapi.py  [API KEY]   
