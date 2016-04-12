@@ -23,4 +23,4 @@ We will:
  - first run python twit2.py making sure that the airport.json file is in the same directory.
  - this step should take a little bit of time as it will create the directory data_city then fill in files with incoming   tweets
 - to run the sentiment on the cities:
-  - run the line  python alchemyapi.py  <API KEY>   
+  - run the line  python alchemyapi.py  [API KEY]   
