@@ -1,0 +1,3 @@
+Document Sentiment: 0.159378
+Target Sentiment: -0.40322
+Tweety Sentiment Score: -0.2344406
