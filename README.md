@@ -26,4 +26,4 @@ We will:
   - run the line `python alchemyapi.py  [API KEY]`   
   - go to the `alchemy_api` directory
   - run the line `python tweetpy_sa.py`
-   - this should create a files named `<city>_sentiment_results.txt` with the sentiment analysis for the related documents, targeted sentiment analysis for the city, and a weighted score 
+   - this should create a file named `<city>_sentiment_results.txt` with the sentiment analysis for the related documents, targeted sentiment analysis for the city, and a weighted score 
