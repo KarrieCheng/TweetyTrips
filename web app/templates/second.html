@@ -1,1 +1,101 @@
-HELLO
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>CSCE 470</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js" ></script>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: #56D6D5;
+        
+      }
+      #map {
+        height: 75%;
+        width: 50%;
+        border: 5px solid #FBE745;
+        border-radius: 18px;
+        
+        
+      }
+      #title{
+        text-align: center;
+        font-family: Helvetica;
+        color: white;
+        font-weight: 100;
+        font-size: 40px;
+      }
+     
+    .center {
+      margin: auto;
+      width: 60%;
+      padding: 10px;
+      
+    }
+    
+    /*nice table*/
+    
+    table#nice { 
+      margin: 0 auto;
+      border-collapse: collapse;
+      font-family: Agenda-Light, sans-serif;
+      font-weight: 100; 
+      background: #F2A2A3; color: #fff;
+      text-rendering: optimizeLegibility;
+      border-radius: 5px; 
+    }
+
+      table#nice thead th { font-weight: 600; }
+      table#nice thead th, table#nice tbody td { 
+        padding: .8rem; font-size: 1.4rem;
+        padding-right:4.5rem;
+        
+      }
+      table#nice tbody td { 
+        padding: .8rem; font-size: 1.4rem;
+        color: #444; background: #eee; 
+      }
+      table#nice tbody tr:not(:last-child) { 
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;  
+      }
+      
+      @media screen and (max-width: 600px) {
+        table#nice caption { background-image: none; }
+        table#nice thead { display: none; }
+        table#nice tbody td { 
+          display: block; padding: .6rem; 
+        }
+        table#nice tbody tr td:first-child { 
+          background: #666; color: #fff; 
+        }
+      	table#nice tbody td:before { 
+          content: attr(data-th); 
+          font-weight: bold;
+          display: inline-block;
+          width: 6rem;  
+        }
+      }
+      #space{
+        padding:2em;
+      }
+    
+    </style>
+    <style type="text/css" src="../static/style.css">
+    </style>
+  </head>
+  <body>
+    <h1 id="title">Tweety Trips ;D</h1>
+    <div id="map" class="center" class="card"></div>
+   
+   <script type="text/javascript" src="../static/airports.json"></script>
+   <script type="text/javascript" src="../static/maps2.js"></script>
+   <!--<script type="text/javascript" src="../static/maps.json"></script>-->
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIGtisBEl4uCYz8NkM17FdZ2d5LlV9YHg&callback=initMap"
+    async defer></script></body>
+  
+</html>

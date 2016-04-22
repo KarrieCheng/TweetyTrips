@@ -1,5 +1,5 @@
-body            { font-family: sans-serif; background: #eee; }
-a, h1, h2       { color: #377ba8; }
+body            { font-family: sans-serif; background: #56D6D5; }
+a, h1, h2       { color: #56D6D5; }
 h1, h2          { font-family: 'Georgia', serif; margin: 0; }
 h1              { border-bottom: 2px solid #eee; }
 h2              { font-size: 1.2em; }
@@ -16,3 +16,81 @@ h2              { font-size: 1.2em; }
 .flash          { background: #cee5F5; padding: 0.5em;
                   border: 1px solid #aacbe2; }
 .error          { background: #f0d6d6; padding: 0.5em; }
+#map            {height: 30%; width:50%;}
+
+html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: #56D6D5;
+        
+      }
+      #map {
+        height: 75%;
+        width: 50%;
+        border: 5px solid #FBE745;
+        border-radius: 18px;
+        
+        
+      }
+      #title{
+        text-align: center;
+        font-family: Helvetica;
+        color: white;
+        font-weight: 100;
+        font-size: 40px;
+      }
+     
+    .center {
+      margin: auto;
+      width: 60%;
+      padding: 10px;
+      
+    }
+    
+    /*nice table*/
+    
+    table#nice { 
+      margin: 0 auto;
+      border-collapse: collapse;
+      font-family: Agenda-Light, sans-serif;
+      font-weight: 100; 
+      background: #F2A2A3; color: #fff;
+      text-rendering: optimizeLegibility;
+      border-radius: 5px; 
+    }
+
+      table#nice thead th { font-weight: 600; }
+      table#nice thead th, table#nice tbody td { 
+        padding: .8rem; font-size: 1.4rem;
+        padding-right:4.5rem;
+        
+      }
+      table#nice tbody td { 
+        padding: .8rem; font-size: 1.4rem;
+        color: #444; background: #eee; 
+      }
+      table#nice tbody tr:not(:last-child) { 
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;  
+      }
+      
+      @media screen and (max-width: 600px) {
+        table#nice caption { background-image: none; }
+        table#nice thead { display: none; }
+        table#nice tbody td { 
+          display: block; padding: .6rem; 
+        }
+        table#nice tbody tr td:first-child { 
+          background: #666; color: #fff; 
+        }
+      	table#nice tbody td:before { 
+          content: attr(data-th); 
+          font-weight: bold;
+          display: inline-block;
+          width: 6rem;  
+        }
+      }
+      #space{
+        padding:2em;
+      }

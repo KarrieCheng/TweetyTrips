@@ -4,11 +4,14 @@ from flask import Flask, request, session, g, redirect, url_for, \
 from flask_googlemaps import GoogleMaps
 from flask_googlemaps import Map
 
-import os, json
+import os, json, simplejson
 
 app = Flask(__name__)
 app.debug = True
 GoogleMaps(app)
+
+# css_file = url_for('static', filename='style.css')
+
 
 @app.route('/')
 def index():
