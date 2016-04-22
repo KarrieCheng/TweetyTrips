@@ -19,7 +19,7 @@ var center;
       }
       
       if (center == null)
-        center = {lat: 10.59098, lng:-96.3617013} ; //want this to be dynamic
+        center = {lat: 30.59098, lng:-96.3617013} ; //want this to be dynamic
       
       // var center = {lat: , lng: 131.044};
       // var myLatlng = center;
