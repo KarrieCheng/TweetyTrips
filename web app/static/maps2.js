@@ -75,24 +75,54 @@ var redirect = "";
           });
       p1.then(
           function(val) {
+            
+            var airports_array = [];
             for (var airport in val){
           
                $('#nice tr:last').after('<tr><td>'+ 'Houston' +'<td>'+ val[airport].City +'<td> .99');
               createMarkerAirport(map, val[airport]);
-            }
-          })
-      .catch(
-         // Log the rejection reason
-         function(reason) {
-              console.log('Handle rejected promise ('+reason+') here.');
-         });
+              var airport_geo = {lat: val[airport].Latitude, lng:val[airport].Longitude};
+      //           // console.log(getDistance(center, airport_geo));
+                val[airport].distance = getDistance(center, airport_geo);
+                 airports_array.push(val[airport]);
+                        }
+                        return airports_array;
+                      }).then(
+                      function(val) {
+                        var close_airport_tables = document.getElementById("closest_airports");
+                        val = sortByKey(val, 'distance');
+                        for (var i = 0; i< 5; i++){
+                          close_airport_tables.innerHTML += "<p>" + val[i].City + ": "+ val[i].distance +"km </p>";
+                        }
+                        
+                        console.log(val.toString());
+                      })
+                  .catch(
+                     // Log the rejection reason
+                     function(reason) {
+                          console.log('Handle rejected promise ('+reason+') here.');
+                     });
+                 
+                airports_info = sortByKey(airports_info, 'distance');
        
 
   }
   
   
+//Thank you http://stackoverflow.com/questions/8175093/simple-function-to-sort-an-array-of-objects
+function sortByKey(array, key) {
+    return array.sort(function(a, b) {
+        var x = a[key]; var y = b[key];
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });
+}
 
 
+function getDistance (origin,dest) {
+  start = new google.maps.LatLng(origin.lat, origin.lng);
+  end = new google.maps.LatLng(dest.lat, dest.lng);
+	return google.maps.geometry.spherical.computeDistanceBetween(start,end);
+}
 
 
 
@@ -188,73 +218,4 @@ function createMarkerAirport( map1, airport) {
 // }
 
 // if ("geolocation
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -16,7 +16,15 @@ from tweepy import Stream
 import json
 from pprint import pprint
 import sys, string, os
-
+import tweepy
+from tweepy.streaming import StreamListener
+from tweepy import OAuthHandler
+from tweepy import Stream
+import json
+from pprint import pprint
+import sys
+import string
+import os
 
 app = Flask(__name__)
 app.debug = True
@@ -151,16 +159,22 @@ def create_data():
     # searched_tweets = [status for status in tweepy.Cursor(api.search, q=query,lang="en").items(max_tweets)]
     # # print searched_tweets.text
     data = get_data()
-    # for d in data:
-    #     if not os.path.exists("data_city"):
-    #         os.makedirs("data_city")
-    #         file = open( "data_city" + "/"+d['City']+".txt", 'a')
-    # for tweet in tweepy.Cursor(api.search,q = d['City'],count = max_tweets,result_type="recent",include_entities=True,lang="en").items(10):
-    #     print(tweet.text)
-    #     file.write(json.dumps(tweet["text"]).encode('utf-8'))
-    #     file.write('\n')
+    for d in data:
+        print(d)
+        if not os.path.exists("data_city"):
+            os.makedirs("data_city")
+        file = open( "data_city" + "/"+d['City']+".txt", 'a')
+        for tweet in tweepy.Cursor(api.search,q = d['City'],count = max_tweets,result_type="recent",include_entities=True,lang="en").items(10):
+            try:
+                print(tweet.text)
+                file.write(json.dumps(tweet["text"]).encode('utf-8'))
+                file.write('\n') 
+            except:
+                print("no Tweets")
+        # file.write(json.dumps(tweet["text"]).encode('utf-8'))
+        # file.write('\n')
     
-    # file.close
+    file.close
   
 
 if __name__ == '__main__':

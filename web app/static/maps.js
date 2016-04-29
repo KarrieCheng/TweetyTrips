@@ -93,7 +93,7 @@ var redirect = "";
               var close_airport_tables = document.getElementById("closest_airports");
               val = sortByKey(val, 'distance');
               for (var i = 0; i< 5; i++){
-                close_airport_tables.innerHTML += "<p>" + val[i].City + ": "+ val[i].distance +"</p>";
+                close_airport_tables.innerHTML += "<p>" + val[i].City + ": "+ val[i].distance +"km </p>";
               }
               
               console.log(val.toString());
