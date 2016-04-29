@@ -1,22 +1,24 @@
 <!DOCTYPE html>
+
+
 <html>
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    
     <meta charset="utf-8">
     <title>CSCE 470</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js" ></script>
-    <link href="static/style.css" rel="stylesheet" media="screen">
+    <link  href="{{ url_for('static', filename='stylesheets/style.css') }}" rel="stylesheet" media="screen" >
+    <link href='https://fonts.googleapis.com/css?family=Bitter:400,700|Lato' rel='stylesheet' type='text/css'>
+    
+    
   </head>
   <body>
-    <h1 id="title">Tweety Trips ;D</h1>
-    <div id="map" class="center" class="card"></div>
-   
-   <script type="text/javascript" src="../static/airports.json"></script>
-   <script type="text/javascript" src="../static/maps.js"></script>
-   
-
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIGtisBEl4uCYz8NkM17FdZ2d5LlV9YHg&callback=initMap"
-    async defer></script></body>
+    <h1 id="title">Tweety Trips</h1>
+    <!--<div id="loader">-->
+      <div id="map" class="center" ></div>
+   <!--</div>-->
+    </body>
     <span id ="space"></span>
     <table id="nice">
       <thead>
@@ -28,4 +30,11 @@
         <td> $120
         <td> .99
     </table>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIGtisBEl4uCYz8NkM17FdZ2d5LlV9YHg&callback=initMap&libraries=geometry"
+    async defer></script>
+    <script type="text/javascript" src="../static/airports.json"></script>
+   <script type="text/javascript" src="../static/maps.js"></script>
+   
+
+ 
 </html>

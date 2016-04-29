@@ -7,37 +7,52 @@
 
 var airports_info;
 var markers = [];
-var center;
+var center
+var list_of_airports = [];
+
+function distBetween(origin, destination) {
+  return google.maps.geometry.spherical.computeDistanceBetween(origin,destination);
+}
  function initMap() {
-     if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            console.log(position.coords.latitude +" "+ position.coords.longitude);
-            center = {lat: position.coords.latitude, lng: position.coords.longitude};
+   
+  var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 4,
+                center: {lat: 39, lng:-98.3617013}
+              }); 
+   
+  var p2 = new Promise(
+          function(resolve, reject) {
+              if ("geolocation" in window.navigator) {
+                window.navigator.geolocation.getCurrentPosition(function(position) {
+                    resolve({lat: position.coords.latitude, lng: position.coords.longitude});
+                  });
+              } else {
+                resolve(null);
+              }
           });
-      } else {
-        Console.log("Cannot do geolocation");
-      }
-      
-      if (center == null)
-        center = {lat: 30.59098, lng:-96.3617013} ; //want this to be dynamic
-      
-      // var center = {lat: , lng: 131.044};
-      // var myLatlng = center;
-
-
-//when removing topmost map definition, uncomment this
-      var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 4,
-        center: center
+      p2.then(
+        function(val) {
+          if (val == null)
+            center = {lat: 39, lng:-98.3617013};
+          else
+            center = val;
+          return val;
+        }).then(
+          function(val){
+            
+            map.setCenter(val);
+            map.setZoom(7);
+            createMarker(map, val.lat, val.lng);
+           return "Success";
+          }
+      )
+      .catch(
+        // Log the rejection reason
+        function(reason) {
+              console.log('Handle rejected promise ('+reason+') here.');
       });
-
-    //   var marker = new google.maps.Marker({
-    //     position: center,
-    //     map: map,
-    //     title: 'Click to zoom'
-    //   });
-    
-    createMarker(map, 30.59098,-96.3617013);
+         
+         
 
     // map.addListener('center_changed', function() {
     // // 3 seconds after the center of the map has changed, pan back to the
@@ -46,26 +61,9 @@ var center;
     //     map.panTo(marker.getPosition());
     //     }, 3000);
     // });
-
-   
-    
-    //must populate airports before attempting to create markers
-    $.getJSON('/static/airports.json', function(data) {         
-      airports_info = data;
-    });
-    
     // createMarkers(map);
     
     
-    
-    
-    
-    // setTimeout(function(){
-    //   for (var airport in airports_info){
-         
-    //     createMarker(map, airport.Latitude, airport.Longitude)
-    // }}, 10000);
-       
        
       var p1 = new Promise(
           function(resolve, reject) {
@@ -75,33 +73,47 @@ var center;
           });
       p1.then(
           function(val) {
-            for (var airport in val){
-              createMarkerAirport(map, val[airport].Latitude, val[airport].Longitude, val[airport].IATA);
-            }
+            //create a container that holds closest airport, or the nearest 3 hours
+            list_of_airports = val;
+            
+            // // var coord = 0;
+            //   for (var airport in val){
+            //     var coord = {lat:  val[airport].Latitude, lng:  val[airport].Longitude};
+            //     // createMarkerAirport(map, coord.lat, coord.lng, val[airport].IATA);
+            // //     if (distBetween(coord, center) < 200)
+            // //       list_of_airports.push(val[airport]);
+            //   }
+            //   return "Success";
+              
+              
+              
           })
+      // }).then(
+      //   function(val) {
+      //       //create a container that holds closest airport, or the nearest 3 hours
+            
+      //     console.log(val);
+      // } )
       .catch(
-         // Log the rejection reason
          function(reason) {
               console.log('Handle rejected promise ('+reason+') here.');
          });
        
-          // markers.push(marker);
     
     
-    
-    //sry bran
-    
-
-    // for (var airport in airports_info){
-    //   var center = {lat: airport.Latitude, lng:airport.Longitude} ; //want this to be dynamic
+    Promise.all([p1, p2]).then(function(value) { 
+      console.log(value);
       
-    //   var marker = new google.maps.Marker({
-    //         position: center,
-    //         map: map,
-    //         title: 'Click to zoom'
-    //       });
-    //       markers.push(marker);
-    // }
+      //compare center and airports
+      for (var airport in list_of_airports){
+        var coord = {lat:  list_of_airports[airport].Latitude, lng:  list_of_airports[airport].Longitude};
+          createMarkerAirport(map, coord.lat, coord.lng, list_of_airports[airport].IATA); 
+      }
+    }, function(reason) {
+      console.log(reason)
+    });
+    
+    
   }
   
   
@@ -172,16 +184,7 @@ function createMarkerAirport( map1, lat, long, title) {
   		map: map1,
   		position: center,
   		icon: image,
-  		title: title,
+  		label: title.toString(),
   		animation: google.maps.Animation.DROP
   	});
-}
-
-if ("geolocation" in navigator) {
-  navigator.geolocation.getCurrentPosition(function(position) {
-      console.log(position.coords.latitude +" "+ position.coords.longitude);
-      center = {lat: position.coords.latitude, lng: position.coords.longitude};
-    });
-} else {
-  Console.log("Cannot do geolocation");
 }

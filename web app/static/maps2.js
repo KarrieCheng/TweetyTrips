@@ -7,6 +7,7 @@
 
 var airports_info;
 var markers = [];
+var redirect = "";
  function initMap() {
       var center = {lat: 30.59098, lng:-96.3617013} ; //want this to be dynamic
       // var center = {lat: , lng: 131.044};
@@ -23,7 +24,39 @@ var markers = [];
     
     createMarker(map, 30.59098,-96.3617013);
 
-
+  var p2 = new Promise(
+          function(resolve, reject) {
+              if ("geolocation" in window.navigator) {
+                window.navigator.geolocation.getCurrentPosition(function(position) {
+                    resolve({lat: position.coords.latitude, lng: position.coords.longitude});
+                  });
+              } else {
+                resolve(null);
+              }
+          });
+      p2.then(
+        function(val) {
+          if (val == null)
+            center = {lat: 39, lng:-98.3617013};
+          else
+            center = val;
+          return val;
+        }).then(
+          function(val){
+            
+            map.setCenter(val);
+            map.setZoom(7);
+            createMarker(map, val.lat, val.lng);
+          return "Success";
+          }
+      )
+      .catch(
+        // Log the rejection reason
+        function(reason) {
+              console.log('Handle rejected promise ('+reason+') here.');
+      });
+         
+         
    
     
     //must populate airports before attempting to create markers
@@ -85,13 +118,15 @@ function createMarkerAirport( map1, lat, long) {
   		animation: google.maps.Animation.DROP
   	});
   	 google.maps.event.addListener(marker, 'click', function() { 
-       alert("I am marker " + marker.title); 
+  	  
+         console.log("sd")
+            
     }); 
 }
 
 if ("geolocation" in navigator) {
   navigator.geolocation.getCurrentPosition(function(position) {
-      console.log(position.coords.latitude +" "+ position.coords.longitude);
+    
     });
 } else {
   Console.log("Cannot do geolocation");
@@ -102,6 +137,7 @@ if ("geolocation" in navigator) {
     
      
       console.log("TE");
+  
     //   console.log(this.position.lng());
      
 
