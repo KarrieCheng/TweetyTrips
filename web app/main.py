@@ -53,7 +53,7 @@ def second():
         create_data()
         return render_template('second.html')
     except:
-        return render_template('second.html')
+        return "SDa" 
 @app.route("/destination", methods=['GET'])
 def destination():
     x = { "City":"Atlanta","IATA":"ATL","Latitude":33.636719,"Longitude":-84.428067}
@@ -114,33 +114,54 @@ oauth = OAuth(access_token, access_token_secret, consumer_key, consumer_secret)
 twitter_stream = TwitterStream(auth=oauth)
 
 
+# def create_data():
+#     data = get_data()
+#     for d in data:
+#         tweet_count = 20
+#         iterator = twitter_stream.statuses.filter(track = d['City'], language="en")
+#         if not os.path.exists("data_city"):
+#             os.makedirs("data_city")
+#         file = open( "data_city" + "/"+d['City']+".txt", 'a')
+#         for tweet in iterator:
+#             tweet_count -= 1
+#             # Twitter Python Tool wraps the data returned by Twitter 
+#             # as a TwitterDictResponse object.
+#             # We convert it back to the JSON format to print/score
+            
+#             try:
+#                 file.write(json.dumps(tweet["text"]).encode('utf-8'))
+#                 file.write('\n') 
+#             except:
+#                 print("no Tweets")
+#             # The command below will do pretty printing for JSON data, try it out
+#             # print json.dumps(tweet, indent=4)
+            
+#             if tweet_count <= 0:
+#                 break 
+
+
 def create_data():
+    print("D")
+    auth = OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    # # stream = Stream(auth, l)
+    api = tweepy.API(auth)
+    query = 'python'
+    max_tweets = 1
+    # searched_tweets = [status for status in tweepy.Cursor(api.search, q=query,lang="en").items(max_tweets)]
+    # # print searched_tweets.text
     data = get_data()
-    for d in data:
-        tweet_count = 5
-        iterator = twitter_stream.statuses.filter(track = d['City'], language="en")
-        if not os.path.exists("data_city"):
-            os.makedirs("data_city")
-        file = open( "data_city" + "/"+d['City']+".txt", 'a')
-        for tweet in iterator:
-            tweet_count -= 1
-            # Twitter Python Tool wraps the data returned by Twitter 
-            # as a TwitterDictResponse object.
-            # We convert it back to the JSON format to print/score
-            
-            try:
-                file.write(json.dumps(tweet["text"]).encode('utf-8'))
-                file.write('\n') 
-            except:
-                print("no Tweets")
-            # The command below will do pretty printing for JSON data, try it out
-            # print json.dumps(tweet, indent=4)
-            
-            if tweet_count <= 0:
-                break 
-
-
+    # for d in data:
+    #     if not os.path.exists("data_city"):
+    #         os.makedirs("data_city")
+    #         file = open( "data_city" + "/"+d['City']+".txt", 'a')
+    # for tweet in tweepy.Cursor(api.search,q = d['City'],count = max_tweets,result_type="recent",include_entities=True,lang="en").items(10):
+    #     print(tweet.text)
+    #     file.write(json.dumps(tweet["text"]).encode('utf-8'))
+    #     file.write('\n')
     
+    # file.close
+  
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 8080))

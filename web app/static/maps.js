@@ -78,13 +78,25 @@ var redirect = "";
             });
         p1.then(
             function(val) {
+              var airports_array = [];
               for (var airport in val){
                 createMarkerAirport(map, val[airport]);
-                airport_geo = {lat: val[airport].Latitude, lng:val[airport].Longitude};
+                var airport_geo = {lat: val[airport].Latitude, lng:val[airport].Longitude};
                 // console.log(getDistance(center, airport_geo));
                 val[airport].distance = getDistance(center, airport_geo);
                 // console.log(center.lat);
+                airports_array.push(val[airport]);
               }
+              return airports_array;
+            }).then(
+            function(val) {
+              var close_airport_tables = document.getElementById("closest_airports");
+              val = sortByKey(val, 'distance');
+              for (var i = 0; i< 5; i++){
+                close_airport_tables.innerHTML += "<p>" + val[i].City + ": "+ val[i].distance +"</p>";
+              }
+              
+              console.log(val.toString());
             })
         .catch(
            // Log the rejection reason
