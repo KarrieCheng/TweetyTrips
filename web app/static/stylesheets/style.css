@@ -28,8 +28,8 @@ html, body {
         
       }
       #map {
-        height: 300px;
-        width: 500px;
+        height: 70%;
+        width: 70%;
         border: 5px solid #FBE745;
         border-radius: 18px;
         
@@ -44,7 +44,6 @@ html, body {
      
     .center {
       margin: auto;
-      width: 60%;
       padding: 10px;
       
     }

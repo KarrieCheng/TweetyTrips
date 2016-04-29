@@ -45,10 +45,12 @@ def index():
     airport_info = getAirportJson()
     
     return render_template('index.html', sndmap=sndmap, author=author, name=name, airport_info=airport_info)
+
+
 @app.route("/second")
 def second():
     try:
-        # create_data()
+        create_data()
         return render_template('second.html')
     except:
         return render_template('second.html')
@@ -62,6 +64,17 @@ def getAirportJson():
         data = json.load(data_file)
     return data
     
+    
+    
+@app.route("/third")
+def third():
+    try:
+        # create_data()
+        return render_template('third.html')
+    except:
+        return render_template('third.html')
+@app.route("/destination", methods=['GET'])
+
     
 # def getAirportsLocations():
 #     airport_list = []

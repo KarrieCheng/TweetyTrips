@@ -43,10 +43,11 @@ var redirect = "";
           return val;
         }).then(
           function(val){
-            
+           
             map.setCenter(val);
             map.setZoom(7);
             createMarker(map, val.lat, val.lng);
+            
           return "Success";
           }
       )
@@ -75,7 +76,9 @@ var redirect = "";
       p1.then(
           function(val) {
             for (var airport in val){
-              createMarkerAirport(map, val[airport].Latitude, val[airport].Longitude);
+          
+               $('#nice tr:last').after('<tr><td>'+ 'Houston' +'<td>'+ val[airport].City +'<td> .99');
+              createMarkerAirport(map, val[airport]);
             }
           })
       .catch(
@@ -107,10 +110,10 @@ function createMarker( map1, lat, long) {
   	  
 }
 
-function createMarkerAirport( map1, lat, long) {
+function createMarkerAirport( map1, airport) {
     var image = '/static/airport.png';
  
-    var center = {lat: lat, lng: long} ; //want this to be dynamic
+    var center = {lat: airport.Latitude, lng: airport.Longitude} ; //want this to be dynamic
   	var marker = new google.maps.Marker({
   		map: map1,
   		position: center,
@@ -119,26 +122,139 @@ function createMarkerAirport( map1, lat, long) {
   	});
   	 google.maps.event.addListener(marker, 'click', function() { 
   	  
-         console.log("sd")
+        console.log("sd")
             
     }); 
+    
+    var contentString = '<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<h1 id="firstHeading" class="firstHeading">'+airport.City+'</h1>'+
+      '<div id="bodyContent">'+
+      "SOMETHING COOL"
+      +
+      '</div>'+
+      '</div>';
+
+ 
+
+  var infowindow = new google.maps.InfoWindow({
+    content: contentString
+  });
+  	var marker = new google.maps.Marker({
+  		map: map1,
+  		position: center,
+  		icon:image,
+  		animation: google.maps.Animation.DROP
+  	});
+  	 google.maps.event.addListener(marker, 'click', function() { 
+  	  infowindow.open(map1, marker);
+  	 // 
+  	 });
 }
 
-if ("geolocation" in navigator) {
-  navigator.geolocation.getCurrentPosition(function(position) {
+// function createMarkerAirport( map1, lat, long) {
     
-    });
-} else {
-  Console.log("Cannot do geolocation");
-}
+//     var image = '/static/airport.png';
+//     var title = "Austin"
+//     var information = "HAPPY"
+//     var center = {lat: lat, lng: long} ; //want this to be dynamic
+//     var contentString = '<div id="content">'+
+//       '<div id="siteNotice">'+
+//       '</div>'+
+//       '<h1 id="firstHeading" class="firstHeading">'+title+'</h1>'+
+//       '<div id="bodyContent">'+
+//       airports_info.City
+//       +
+//       '</div>'+
+//       '</div>';
+
+ 
+
+//   var infowindow = new google.maps.InfoWindow({
+//     content: contentString
+//   });
+//   	var marker = new google.maps.Marker({
+//   		map: map1,
+//   		position: center,
+//   		icon:image,
+//   		animation: google.maps.Animation.DROP
+//   	});
+//   	 google.maps.event.addListener(marker, 'click', function() { 
+//   	  infowindow.open(map1, marker);
+         
+            
+//     }); 
+// }
+
+// if ("geolocation
 
 
-  marker.addListener('click', function() {
-    
-     
-      console.log("TE");
-  
-    //   console.log(this.position.lng());
-     
 
-    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
