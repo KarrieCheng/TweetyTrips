@@ -1,7 +1,3 @@
-
-//BRANDON CODE START
-
-
 //airplane image by Situ Herrera in signs.
 //suitcase by Freepik in other.
 
@@ -11,23 +7,73 @@
 var airports_info;
 var markers = [];
 var redirect = "";
- function initMap() {
-      var center = {lat: 30.59098, lng:-96.3617013} ; //want this to be dynamic
-      // var center = {lat: , lng: 131.044};
-      // var myLatlng = center;
+function initMap() {
+  var center = {lat: 30.59098, lng:-96.3617013} ; //want this to be dynamic
+  // var center = {lat: , lng: 131.044};
+  // var myLatlng = center;
 
 
-//when removing topmost map definition, uncomment this
-      var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 7,
-        center: center
-      });
+  //when removing topmost map definition, uncomment this
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 7,
+    center: center
+  });
 
 
     
-    createMarker(map, 30.59098,-96.3617013);
+  createMarker(map, 30.59098,-96.3617013);
+    ///PLACES SEARCH
+// Create the search box and link it to the UI element.
+  var input = document.getElementById('pac-input');
+  var searchBox = new google.maps.places.SearchBox(input);
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  
+ // Bias the SearchBox results towards current map's viewport.
+  map.addListener('bounds_changed', function() {
+    searchBox.setBounds(map.getBounds());
+  });
+  
+// Listen for the event fired when the user selects a prediction and retrieve
+      // more details for that place.
+  searchBox.addListener('places_changed', function() {
+    var places = searchBox.getPlaces();
+  
+    if (places.length == 0) {
+      return;
+    }
+  
+    // For each place, get the icon, name and location.
+    var bounds = new google.maps.LatLngBounds();
+    places.forEach(function(place) {
+      center = {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()} ; //want this to be dynamic
+  
+      if (place.geometry.viewport) {
+        bounds.union(place.geometry.viewport);
+      } else {
+        bounds.extend(place.geometry.location);
+      }
+      
+      distanceCalculationPromise(map, center);
+    });
+    map.fitBounds(bounds);
+  });
 
-    var p2 = new Promise(
+
+    geolocationRetrievalPromise(map,center);
+  
+    //must populate airports before attempting to create markers
+    $.getJSON('/static/airports.json', function(data) {         
+      airports_info = data;
+    });
+    
+ 
+    distanceCalculationPromise(map,center);
+    
+    // airports_info = sortByKey(airports_info, 'distance');
+     
+  }
+function geolocationRetrievalPromise(map, center){
+  var geolocation_promise = new Promise(
             function(resolve, reject) {
                 if ("geolocation" in window.navigator) {
                   //DEPRECATED ON INSECURE LOCATIONS; WELP!
@@ -38,7 +84,7 @@ var redirect = "";
                   resolve(null);
                 }
             });
-        p2.then(
+        geolocation_promise.then(
           function(val) {
             if (val == null)
               center = {lat: 39, lng:-98.3617013};
@@ -59,18 +105,11 @@ var redirect = "";
           function(reason) {
                 console.log('Handle rejected promise ('+reason+') here.');
         });
-           
-           
-     
-      
-      //must populate airports before attempting to create markers
-      $.getJSON('/static/airports.json', function(data) {         
-        airports_info = data;
-      });
-      
-   
-         
-        var p1 = new Promise(
+}
+  
+function distanceCalculationPromise(map, center){
+  
+  var p1 = new Promise(
             function(resolve, reject) {
                 $.getJSON('/static/airports.json', function(data) {         
                   resolve(data); 
@@ -92,22 +131,25 @@ var redirect = "";
             function(val) {
               var close_airport_tables = document.getElementById("closest_airports");
               val = sortByKey(val, 'distance');
-              for (var i = 0; i< 5; i++){
-                close_airport_tables.innerHTML += "<p>" + val[i].City + ": "+ val[i].distance +"km </p>";
+              var first_n_airports = 5;
+              for (var i = 0; i< first_n_airports; i++){
+                if (i == 0) 
+                  close_airport_tables.innerHTML = " "
+                //race conditions, yo
+                close_airport_tables.innerHTML += "<p>" + val[i].City + " (" + val[i].IATA +"): "+ val[i].distance +" miles </p>";
+                
               }
               
-              console.log(val.toString());
             })
         .catch(
-           // Log the rejection reason
-           function(reason) {
+          // Log the rejection reason
+          function(reason) {
                 console.log('Handle rejected promise ('+reason+') here.');
-           });
+          });
        
       airports_info = sortByKey(airports_info, 'distance');
-
-  }
   
+}
   
 
 
@@ -115,7 +157,7 @@ var redirect = "";
 function getDistance (origin,dest) {
   start = new google.maps.LatLng(origin.lat, origin.lng);
   end = new google.maps.LatLng(dest.lat, dest.lng);
-	return google.maps.geometry.spherical.computeDistanceBetween(start,end);
+	return Math.floor(google.maps.geometry.spherical.computeDistanceBetween(start,end) * 0.000621371);
 }
 
 function createMarker( map1, lat, long) {
@@ -195,28 +237,6 @@ function createMarkerAirport( map1, airport) {
 
 
 
-
-
-
-// if ("geolocation" in navigator) {
-//   navigator.geolocation.getCurrentPosition(function(position) {
-    
-//     });
-// } else {
-//   Console.log("Cannot do geolocation");
-// }
-
-
-//   marker.addListener('click', function() {
-    
-     
-//       console.log("TE");
-  
-//     //   console.log(this.position.lng());
-     
-
-//     });
-
 //Thank you http://stackoverflow.com/questions/8175093/simple-function-to-sort-an-array-of-objects
 function sortByKey(array, key) {
     return array.sort(function(a, b) {
@@ -224,3 +244,22 @@ function sortByKey(array, key) {
         return ((x < y) ? -1 : ((x > y) ? 1 : 0));
     });
 }
+//Same http://stackoverflow.com/questions/20916221/getting-latitude-and-longitude-from-google-places-search-api-using-javascript
+function getLatlong()
+    {
+        var latitude = 0;
+        var longitude = 0;
+        var geocoder = new google.maps.Geocoder();
+        var address = document.getElementById('pac-input').value;
+
+        geocoder.geocode({ 'address': address }, function (results, status) {
+
+        if (status == google.maps.GeocoderStatus.OK) {
+                latitude = results[0].geometry.location.lat();
+                longitude = results[0].geometry.location.lng();
+var center = {lat: latitude, lng: longitude};
+return center;
+            }
+        });
+        
+    }  

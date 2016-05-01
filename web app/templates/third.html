@@ -16,6 +16,7 @@
   
   <body>
     <h1 id="title">Tweety Trips ;D</h1>
+    <input id="pac-input" class="controls" type="text" placeholder="Change Current Location">
     <div id="map" class="center" class="card"></div>
    
    <script type="text/javascript" src="../static/airports.json"></script>
@@ -23,7 +24,7 @@
    <!--<script type="text/javascript" src="../static/maps.json"></script>-->
    
 
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIGtisBEl4uCYz8NkM17FdZ2d5LlV9YHg&libraries=geometry&callback=initMap"
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIGtisBEl4uCYz8NkM17FdZ2d5LlV9YHg&libraries=places,geometry&callback=initMap"
     async defer></script>
      <span id ="space"></span>
      <div id = "closest_airports" class = "center"></div>

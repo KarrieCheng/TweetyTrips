@@ -59,9 +59,10 @@ def index():
 def second():
     try:
         create_data()
-        return render_template('second.html')
+        return  render_template("second.html")
     except:
-        return "SDa" 
+        return "Failed loading" 
+        
 @app.route("/destination", methods=['GET'])
 def destination():
     x = { "City":"Atlanta","IATA":"ATL","Latitude":33.636719,"Longitude":-84.428067}
@@ -98,7 +99,7 @@ def third():
 
 
 def get_data():
-    with open("static/airport2.json") as json_file:
+    with open("static/airports.json") as json_file:
         json_data = json.load(json_file)
         return json_data
 
@@ -152,10 +153,10 @@ def create_data():
     print("D")
     auth = OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
-    # # stream = Stream(auth, l)
+   
     api = tweepy.API(auth)
     query = 'python'
-    max_tweets = 1
+    max_tweets = 100
     # searched_tweets = [status for status in tweepy.Cursor(api.search, q=query,lang="en").items(max_tweets)]
     # # print searched_tweets.text
     data = get_data()
@@ -167,7 +168,7 @@ def create_data():
         for tweet in tweepy.Cursor(api.search,q = d['City'],count = max_tweets,result_type="recent",include_entities=True,lang="en").items(10):
             try:
                 print(tweet.text)
-                file.write(json.dumps(tweet["text"]).encode('utf-8'))
+                file.write(tweet.text)
                 file.write('\n') 
             except:
                 print("no Tweets")

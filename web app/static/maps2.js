@@ -79,7 +79,7 @@ var redirect = "";
             var airports_array = [];
             for (var airport in val){
           
-               $('#nice tr:last').after('<tr><td>'+ 'Houston' +'<td>'+ val[airport].City +'<td> .99');
+            //   $('#nice tr:last').after('<tr><td>'+ 'Houston' +'<td>'+ val[airport].City +'<td>' + Math.random());
               createMarkerAirport(map, val[airport]);
               var airport_geo = {lat: val[airport].Latitude, lng:val[airport].Longitude};
       //           // console.log(getDistance(center, airport_geo));
@@ -87,24 +87,33 @@ var redirect = "";
                  airports_array.push(val[airport]);
                         }
                         return airports_array;
-                      }).then(
-                      function(val) {
-                        var close_airport_tables = document.getElementById("closest_airports");
-                        val = sortByKey(val, 'distance');
-                        for (var i = 0; i< 5; i++){
-                          close_airport_tables.innerHTML += "<p>" + val[i].City + ": "+ val[i].distance +"km </p>";
-                        }
-                        
-                        console.log(val.toString());
-                      })
-                  .catch(
-                     // Log the rejection reason
-                     function(reason) {
-                          console.log('Handle rejected promise ('+reason+') here.');
-                     });
+              }).then(
+              function(val) {
+                var close_airport_tables = document.getElementById("closest_airports");
+                val = sortByKey(val, 'distance');
+                // for (var i = 0; i< 5; i++){
+                //   close_airport_tables.innerHTML += "<p>" + val[i].City + ": "+ val[i].distance +"km </p>";
+                // }
+                
+                return val
+              }).then(
+                 function(val) {
+                    for (var airport in val){
+                      sortByKey(val, 'distance');
+                      $('#nice tr:last').after('<tr><td>'+ 'College Station' +'<td>'+ val[airport].City +'<td>' + Math.random());
+                    }
+            })
+          .catch(
+             // Log the rejection reason
+             function(reason) {
+                  console.log('Handle rejected promise ('+reason+') here.');
+             });
                  
-                airports_info = sortByKey(airports_info, 'distance');
-       
+              // airports_info = sortByKey(airports_info, 'distance');
+      // for (var airport in airports_info){
+          
+              // $('#nice tr:last').after('<tr><td>'+ 'Houston' +'<td>'+ airports_info[airport].City +'<td>' + Math.random());
+            
 
   }
   
