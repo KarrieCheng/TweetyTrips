@@ -38,21 +38,9 @@ def index():
     author = "Brandon"
     name = "Karrie"
      # creating a map in the view
-    sndmap = Map(
-        identifier="sndmap",
-        style = "height:500px;width:80%;margin:5%;",
-        lat=37.4419,
-        lng=-122.1419,
-        zoom = 5,
-        markers={'http://maps.google.com/mapfiles/ms/icons/green-dot.png':[(37.4419, -122.1419)],
-                 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png':[(37.4300, -122.1400)]},
-                
-    )
-    
-    
     airport_info = getAirportJson()
     
-    return render_template('index.html', sndmap=sndmap, author=author, name=name, airport_info=airport_info)
+    return render_template('index.html', author=author, name=name, airport_info=airport_info)
 
 
 @app.route("/second")
@@ -64,6 +52,7 @@ def second():
         return "Failed loading" 
         
 @app.route("/destination", methods=['GET'])
+
 def destination():
     x = { "City":"Atlanta","IATA":"ATL","Latitude":33.636719,"Longitude":-84.428067}
     return jsonify(x)
@@ -82,7 +71,25 @@ def third():
         return render_template('third.html')
     except:
         return render_template('third.html')
-@app.route("/destination", methods=['GET'])
+        
+        
+def array(arlist):
+    string = ""
+    for x in arlist:
+        string+= x
+    return string
+
+
+@app.route('/_add_numbers')
+def add_distances():
+    a = request.args.get('iata');
+    # b = request.args.get('airport1')
+    # c = request.args.get('airport2')
+    # d = request.args.get('airport3')
+    
+    # b = request.args.get('airport1')
+    return jsonify(result = a);
+    
 
     
 # def getAirportsLocations():

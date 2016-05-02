@@ -47,6 +47,7 @@ function initMap() {
     places.forEach(function(place) {
       center = {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()} ; //want this to be dynamic
   
+      distanceCalculationPromise(map, center);
       if (place.geometry.viewport) {
         bounds.union(place.geometry.viewport);
       } else {
@@ -132,14 +133,18 @@ function distanceCalculationPromise(map, center){
               var close_airport_tables = document.getElementById("closest_airports");
               val = sortByKey(val, 'distance');
               var first_n_airports = 5;
+              var iata_arrays = [];
               for (var i = 0; i< first_n_airports; i++){
                 if (i == 0) 
                   close_airport_tables.innerHTML = " "
                 //race conditions, yo
-                close_airport_tables.innerHTML += "<p>" + val[i].City + " (" + val[i].IATA +"): "+ val[i].distance +" miles </p>";
-                
+                var span_id = "airport" + i;
+                // close_airport_tables.innerHTML += "<p>" + val[i].City + " <span name = "+ span_id + "> (" + val[i].IATA +") </span>: "+ val[i].distance +" miles </p>";
+                close_airport_tables.innerHTML += "<p>" + val[i].City + " (<span name = "+ span_id + ">" + val[i].distance +"</span> miles): "+ val[i].IATA +" miles </p>";
+                data_string = "{"+span_id+": "+val[i].IATA+"}" 
+                iata_arrays.push(val[i]);
               }
-              
+              getRequestInterestedAirports(iata_arrays);
             })
         .catch(
           // Log the rejection reason
@@ -151,7 +156,17 @@ function distanceCalculationPromise(map, center){
   
 }
   
-
+function getRequestInterestedAirports(iata_array){
+  // iata_array : JSON.stringify(iata_array);
+  // something = iata_array[3]
+  $.get(
+      url=$SCRIPT_ROOT + '/_add_numbers',
+      data={iata: iata_array[0]['IATA']}, 
+      success=function(data) {
+        $("#result").text(data.result);
+      }
+  );
+}
 
 
 function getDistance (origin,dest) {

@@ -1,8 +1,8 @@
-body            { font-family: 'Lato',Georgia, serif; background: #56D6D5; }
-a, h1, h2       { color: #56D6D5; }
+body            { font-family: 'Lato',Georgia, serif; background: #56D6D5;}
 h1, h2, h3, h4, h5, h6, th          { font-family: 'Bitter', serif; margin: 0; }
 h1              { border-bottom: 2px solid #eee; }
 h2              { font-size: 1.2em; }
+span              {color: #F2A2A3; }
 
 .page           { margin: 2em auto; width: 35em; border: 5px solid #ccc;
                   padding: 0.8em; background: white; }
@@ -16,6 +16,7 @@ h2              { font-size: 1.2em; }
 .flash          { background: #cee5F5; padding: 0.5em;
                   border: 1px solid #aacbe2; }
 .error          { background: #f0d6d6; padding: 0.5em; }
+
 /*#map            {height: 20%; width:50%;}*/
 /*#loader         {background-color: white;}*/
 /*<div style="background-image: url(http://your-image.jpg);">*/

@@ -7,7 +7,9 @@
     
     <meta charset="utf-8">
     <title>CSCE 470</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js" ></script>
+    
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js" ></script>-->
+    <!--<script>window.jQuery || document.write('<script src="{{url_for('static', filename='jquery.js') }}">\x3C/script>')</script>-->
     <link  href="{{ url_for('static', filename='stylesheets/style.css') }}" rel="stylesheet" media="screen" >
     <link href='https://fonts.googleapis.com/css?family=Bitter:400,700|Lato' rel='stylesheet' type='text/css'>
     
@@ -15,19 +17,49 @@
   </head>
   
   <body>
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <h1 id="title">Tweety Trips ;D</h1>
     <input id="pac-input" class="controls" type="text" placeholder="Change Current Location">
     <div id="map" class="center" class="card"></div>
    
    <script type="text/javascript" src="../static/airports.json"></script>
    <script type="text/javascript" src="../static/maps.js"></script>
-   <!--<script type="text/javascript" src="../static/maps.json"></script>-->
+   <script type=text/javascript src="{{
+  url_for('static', filename='jquery.js') }}"></script>
+   <script type=text/javascript>
+      $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
    
-
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIGtisBEl4uCYz8NkM17FdZ2d5LlV9YHg&libraries=places,geometry&callback=initMap"
     async defer></script>
+    
+    
+    
+    
+    
      <span id ="space"></span>
      <div id = "closest_airports" class = "center"></div>
+     
+     <!--JS TO PARSE STUFF-->
+     
+    
+  
+    <p class = "dist_calculation center"> Things haven't happened yet, clearly</p>
+    <h5>jQuery Example</h5>
+    <p>
+       <span id=result>?</span>
+    <p><a href=# id=calculate>calculate server side</a>
+    
+    
+    
     <table id="nice">
       <thead>
         <tr><th>Source<th>Destination<th>Price<th>Score
@@ -40,5 +72,5 @@
     </table>
    <a href="{{ url_for('destination') }}">destination</a>
     </body>
-  
+  <script type=text/javascript src="{{url_for('static', filename='jquery.js') }}"></script>
 </html>
