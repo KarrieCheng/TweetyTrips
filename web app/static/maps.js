@@ -131,6 +131,7 @@ function distanceCalculationPromise(map, center){
                 val = sortByKey(val, 'distance');
                 var first_n_airports = 7;
                 var iata_arrays = [];
+                close_airport_tables.innerHTML = "";
                 for (var i = 0; i< first_n_airports; i++){
                   close_airport_tables.innerHTML += "<tr class = 'airport'><td>" + val[i].City + "</td> <td>" + val[i].distance  + "</td> <td class = 'iata'>" + val[i].IATA + "</td>";
                   
@@ -148,7 +149,7 @@ function distanceCalculationPromise(map, center){
 }
 
 
-$(document).on('click','.iata' ,function(){
+$(document).on('click','.airport' ,function(){
     var $item = $(this).closest("tr").find('td.iata');
     $.each($item, function(key, value){
         $.get(
