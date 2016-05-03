@@ -26,6 +26,12 @@ import sys
 import string
 import os
 
+from nltk.tokenize import RegexpTokenizer
+from stop_words import get_stop_words
+from nltk.stem.porter import PorterStemmer
+# from gensim import corpora, models
+# import gensim
+import re
 app = Flask(__name__)
 app.debug = True
 GoogleMaps(app)
@@ -82,13 +88,8 @@ def array(arlist):
 
 @app.route('/_add_numbers')
 def add_distances():
-    a = request.args.get('iata');
-    # b = request.args.get('airport1')
-    # c = request.args.get('airport2')
-    # d = request.args.get('airport3')
-    
-    # b = request.args.get('airport1')
-    return jsonify(result = a);
+    a = request.args.get('iata')
+    return jsonify(result = a)
     
 
     
@@ -183,7 +184,31 @@ def create_data():
         # file.write('\n')
     
     file.close
-  
+ 
+ 
+# def topics(doc):
+#     doc = doc.lower()
+#     doc   = re.sub(r"(?:\@|https?\://)\S+", "", doc)
+#     doc = re.sub(r"austin","",doc)
+#     doc = doc.decode('unicode_escape').encode('ascii','ignore')
+#     doc = re.sub("\W",' ', doc)
+#     doc = ' '.join(word for word in doc.split() if len(word)>3)
+#     tokenizer = RegexpTokenizer(r'\w+')
+#     # create English stop words list
+#     en_stop = get_stop_words('en')
+#     doc_set = [doc]
+#     texts = []
+#     for i in doc_set:
+#         raw = i.lower()
+#         tokens = tokenizer.tokenize(raw)
+#         stopped_tokens = [i for i in tokens if not i in en_stop]
+#         texts.append(stopped_tokens)
+#     dictionary = corpora.Dictionary(texts)
+#     corpus = [dictionary.doc2bow(text) for text in texts]
+#     ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=1, id2word = dictionary, passes=20)
+#     return ldamodel.print_topics(num_topics=1, num_words=3)
+
+     
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 8080))
